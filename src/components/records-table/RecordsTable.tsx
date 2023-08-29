@@ -35,9 +35,9 @@ const RecordsTable: React.FC<RecordsTableProps> = ({ records }) => {
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               className={record.validationNotes && 'failed-record'}
-              key={record.id}
+              key={record.reference}
             >
-              <TableCell>{record.id}</TableCell>
+              <TableCell>{record.reference}</TableCell>
               <TableCell>{record.accountNumber}</TableCell>
               <TableCell>{record.description}</TableCell>
               <TableCell>{record.startBalance}</TableCell>

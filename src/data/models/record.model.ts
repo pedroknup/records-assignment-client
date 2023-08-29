@@ -1,5 +1,5 @@
 export interface RecordModel {
-  id: number;
+  reference: number;
   accountNumber: string;
   description: string;
   startBalance: number;
