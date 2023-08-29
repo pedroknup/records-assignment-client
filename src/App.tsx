@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
 import RecordsTable from './components/records-table/RecordsTable';
 import { processRecords } from './services/records.service';
 import { RecordModel } from './data/models/record.model';
 import { Button } from '@mui/material';
+import './App.css';
 
 function App() {
   const [records, setRecords] = useState<RecordModel[]>([]);
@@ -29,10 +29,10 @@ function App() {
 
   return (
     <div className="container">
-        <div className="file-input-container">
-      <div>
+      <div className="file-input-container">
+        <div>
           <input
-            accept=".csv"
+            accept=".csv, .xml"
             id="contained-button-file"
             multiple
             type="file"
