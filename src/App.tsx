@@ -8,25 +8,27 @@ import FileSelect from './components/file-select/FileSelect';
 
 function App() {
   const [records, setRecords] = useState<RecordModel[]>([]);
-  const [file, setFile] = useState<undefined | any>();
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleFileUploadClick = async () => {
-    const records = await processRecords(file);
+    if (!files) return;
+
+    const records = await processRecords(files);
     setRecords(records);
   };
 
   return (
     <div className="container">
       <div className="form">
-        <FileSelect onFileChange={setFile} file={file}/>
+        <FileSelect onFilesChange={setFiles} files={files} />
         <div>
           <Button
             variant="contained"
             onClick={handleFileUploadClick}
             type="button"
-            disabled={!file}
+            disabled={files.length === 0}
           >
-            Upload File
+            Process Files
           </Button>
         </div>
       </div>

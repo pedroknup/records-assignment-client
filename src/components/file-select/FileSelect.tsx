@@ -3,11 +3,11 @@ import './FileSelect.css';
 import CloseIcon from '@mui/icons-material/Close';
 
 interface FileSelectProps {
-  onFileChange: (file: File | null) => void;
-  file: File | null;
+  onFilesChange: (files: File[]) => void;
+  files: File[];
 }
 
-const FileSelect: React.FC<FileSelectProps> = ({ onFileChange, file }) => {
+const FileSelect: React.FC<FileSelectProps> = ({ onFilesChange, files }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleDragDropClick = () => {
@@ -15,18 +15,31 @@ const FileSelect: React.FC<FileSelectProps> = ({ onFileChange, file }) => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    file && onFileChange(file);
+    // TODO: improve this
+    const files: File[] = [];
+    for (let i = 0; i < e.target.files!.length; i++) {
+      files.push(e.target.files![i]);
+    }
+
+    onFilesChange(files);
   };
 
-  if (file)
+  const removeFile = (file: File) => {
+    onFilesChange(files?.filter((f) => f !== file) ?? null);
+  };
+
+  if (files && files.length > 0)
     return (
-      <div className="file-container">
-        <div className="file-name">{file.name}</div>
-        <CloseIcon
-          className="close-icon"
-          onClick={() => onFileChange(null)}
-        />
+      <div className="files-container">
+        {files.map((file) => (
+          <div className="file-container">
+            <div className="file-name">{file.name}</div>
+            <CloseIcon
+              className="close-icon"
+              onClick={() => removeFile(file)}
+            />
+          </div>
+        ))}
       </div>
     );
 
@@ -36,8 +49,8 @@ const FileSelect: React.FC<FileSelectProps> = ({ onFileChange, file }) => {
         <img className="cloud-icon" src="/cloud-icon.png" alt="cloud icon" />
         <div className="drag-drop-text">
           <span>
-            Drag and drop or <span className="fake-link">browse</span>{' '}
-            your files
+            Drag and drop or <span className="fake-link">browse</span> your
+            files
           </span>
         </div>
       </div>

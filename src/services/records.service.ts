@@ -12,7 +12,7 @@ export const processRecords = async (
 
   const formData = new FormData();
   csvFiles.forEach((csvFile, index) => {
-    formData.append(`file${index}`, csvFile);
+    formData.append(`file`, csvFile);
   });
 
   const options = {
