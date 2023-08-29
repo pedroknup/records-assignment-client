@@ -4,6 +4,7 @@ import { processRecords } from './services/records.service';
 import { RecordModel } from './data/models/record.model';
 import { Button } from '@mui/material';
 import './App.css';
+import FileSelect from './components/file-select/FileSelect';
 
 function App() {
   const [records, setRecords] = useState<RecordModel[]>([]);
@@ -29,40 +30,18 @@ function App() {
 
   return (
     <div className="container">
-      <div className="file-input-container">
+      <div className="form">
+        <FileSelect onFileChange={setFile} file={file}/>
         <div>
-          <input
-            accept=".csv, .xml"
-            id="contained-button-file"
-            multiple
-            type="file"
-            className="file-input"
-            onChange={handleFileChange}
-            ref={inputRef}
-          />
-        </div>
-        <label htmlFor="contained-button-file" className="file-label">
           <Button
-            onClick={handleSelectFileClick}
-            className="select-file-button"
+            variant="contained"
+            onClick={handleFileUploadClick}
+            type="button"
+            disabled={!file}
           >
-            Select File
+            Upload File
           </Button>
-          {file && file.name}
-        </label>
-        {file ? (
-          <div>
-            <Button
-              variant="contained"
-              onClick={handleFileUploadClick}
-              type="button"
-            >
-              Upload File
-            </Button>
-          </div>
-        ) : (
-          <p>No file selected</p>
-        )}
+        </div>
       </div>
       <RecordsTable records={records} />
     </div>
