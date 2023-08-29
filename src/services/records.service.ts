@@ -1,16 +1,19 @@
 import { RecordModel } from "../data/models/record.model";
-import { csvFileToString } from "../utils/csvFileToString.util";
 
 interface RecordsResponse {
   records: RecordModel[];
   success: boolean;
 }
 
-export const processRecords = async (csvFile: File): Promise<RecordModel[]> => {
+export const processRecords = async (
+  csvFiles: File[]
+): Promise<RecordModel[]> => {
   const API_URL = process.env.REACT_APP_API_URL;
 
   const formData = new FormData();
-  formData.append('file', csvFile);
+  csvFiles.forEach((csvFile, index) => {
+    formData.append(`file${index}`, csvFile);
+  });
 
   const options = {
     method: 'POST',
@@ -21,4 +24,4 @@ export const processRecords = async (csvFile: File): Promise<RecordModel[]> => {
 
   const responseData: RecordsResponse = await response.json();
   return responseData.records;
-}
+};
