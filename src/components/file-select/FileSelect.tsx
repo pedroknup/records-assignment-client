@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Snackbar } from '@mui/material';
 import './FileSelect.css';
+import { getRelativePath } from '../../utils/get-relative-path.util';
 
 const UNSUPPORTED_FILE_FORMAT_MESSAGE: string =
   'One or more selected files are not supported. Please select only .csv or .xml files.';
@@ -115,7 +116,7 @@ const FileSelect: React.FC<FileSelectProps> = ({ onFilesChange, files }) => {
 
       {files?.length === 0 && (
         <div onClick={handleDragDropClick} className="drag-drop-container">
-          <img className="cloud-icon" src="/cloud-icon.png" alt="cloud icon" />
+          <img className="cloud-icon" src={getRelativePath("cloud-icon.png")} alt="cloud icon" />
           <div className="drag-drop-text">
             <span>
               Drag and drop or <span className="fake-link">browse</span> your
