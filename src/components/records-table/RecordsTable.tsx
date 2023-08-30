@@ -31,11 +31,11 @@ const RecordsTable: React.FC<RecordsTableProps> = ({ records }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {records.map((record) => (
+          {records.map((record, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               className={record.validationNotes && 'failed-record'}
-              key={record.reference}
+              key={`${record.reference}-${index}`}
             >
               <TableCell>{record.reference}</TableCell>
               <TableCell>{record.accountNumber}</TableCell>
