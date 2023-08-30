@@ -8,6 +8,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Check out the live demo of the application deployed on Github Pages: [Rabobank Customer Transaction Processor Client Demo](https://pedroknup.github.io/records-assignment-client/)
 
+## Repository for the Web-service
+
+This web application utilizes a RESTful API for transaction processing. You have the option to either utilize the [live version of the API](https://hb-assignment-api-a44445af6ef3.herokuapp.com) or clone the [repository](https://github.com/pedroknup/records-assignment-api) and run it on your local environment. Remember to appropriately configure the REACT_APP_API_URL environment variable to match your setup.
+
 ## Getting Started
 
 Follow these steps to run the application locally:
