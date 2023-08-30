@@ -10,6 +10,8 @@ export const processRecords = async (
 ): Promise<RecordModel[]> => {
   const API_URL = process.env.REACT_APP_API_URL;
 
+  if (!API_URL) throw new Error('API_URL not found');
+
   const formData = new FormData();
   csvFiles.forEach((csvFile, index) => {
     formData.append(`file`, csvFile);
