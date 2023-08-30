@@ -8,31 +8,37 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
+    strategy:
+      matrix:
+        node-version: [14, 16]
+
     steps:
-    - name: Check commit message
-      run: |
-        if [[ "${{ github.event.head_commit.message }}" =~ ^chore:.* ]]; then
-          echo "Commit message starts with 'chore:'. Skipping the workflow."
-          exit 0
-        fi
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Install dependencies
-      run: npm install --legacy-peer-deps
-      
-    - name: Build
-      run: npm run build
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.1
-      with:
-        token: ${{ secrets.PAT }}
-        branch: gh-pages
-        folder: build
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          token: ${{ secrets.PAT }}
+          branch: gh-pages
+          folder: build
