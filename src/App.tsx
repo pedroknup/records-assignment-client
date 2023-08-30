@@ -47,7 +47,7 @@ function App() {
             {isLoading && (
               <CircularProgress className="spinning-loader" size={24} />
             )}
-            Process Files
+            Process Transactions
           </Button>
         </div>
       </div>
