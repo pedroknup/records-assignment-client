@@ -17,6 +17,7 @@ input {
   width: 400px;
   background-color: #e1f0ff;
   border-radius: 4px;
+  z-index: 1;
 }
 
 .close-icon {
@@ -39,6 +40,7 @@ input {
     cursor: pointer;
     width: 400px;
     height: 150px;
+    z-index: 1;
 }
 
 .drag-drop-text {
@@ -58,25 +60,29 @@ input {
     cursor: pointer;
 }
 
-
 .file-drop-area {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
 }
 
 .drop-area {
-  position: fixed;
+  position: absolute;
   left: 0;
-  top: 0;
+  top: 100%;
   width: 100%;
   height: 100%;
   background-color: #4285f4;
+  transition: opacity .3s ease-in-out;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  z-index: 10;
+}
+
+.drop-area.dragging {
+  opacity: 1;
+  top: 0;
 }
 
 .drop-area-text {
@@ -87,8 +93,5 @@ input {
   color: white;
   font-weight: bold;
   text-align: center;
-}
-
-.drop-area.dragging {
-  opacity: 1;
+  z-index: -1;
 }
