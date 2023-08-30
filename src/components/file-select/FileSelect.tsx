@@ -1,6 +1,6 @@
-import React from 'react';
-import './FileSelect.css';
+import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import './FileSelect.css';
 
 interface FileSelectProps {
   onFilesChange: (files: File[]) => void;
@@ -9,6 +9,7 @@ interface FileSelectProps {
 
 const FileSelect: React.FC<FileSelectProps> = ({ onFilesChange, files }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleDragDropClick = () => {
     inputRef.current?.click();
@@ -28,6 +29,51 @@ const FileSelect: React.FC<FileSelectProps> = ({ onFilesChange, files }) => {
     onFilesChange(files?.filter((f) => f !== file) ?? null);
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const newFiles = [...e.dataTransfer.files];
+    console.log(
+      'file names',
+      newFiles.map((file) => file.name)
+    );
+    const supportedFileFormats = ['csv', 'xml'];
+    const unsupportedFiles = newFiles.filter(
+      (file) =>
+        !supportedFileFormats.includes(
+          file.name.substring(file.name.lastIndexOf('.') + 1)
+        )
+    );
+    if (unsupportedFiles.length > 0) {
+      alert(
+        `The following files are not supported: ${unsupportedFiles
+          .map((file) => file.name)
+          .join(', ')}`
+      );
+      setIsDragging(false);
+      return;
+    }
+    onFilesChange(newFiles);
+    setIsDragging(false);
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  // useEffect(() => {
+  //   console.log('isDragging', isDragging);
+  // }, [isDragging]);
+
   if (files && files.length > 0)
     return (
       <div className="files-container">
@@ -45,6 +91,13 @@ const FileSelect: React.FC<FileSelectProps> = ({ onFilesChange, files }) => {
 
   return (
     <div className="file-select">
+      <div
+        className="file-drop-area"
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      ></div>
       <div onClick={handleDragDropClick} className="drag-drop-container">
         <img className="cloud-icon" src="/cloud-icon.png" alt="cloud icon" />
         <div className="drag-drop-text">
@@ -63,6 +116,11 @@ const FileSelect: React.FC<FileSelectProps> = ({ onFilesChange, files }) => {
         onChange={handleFileChange}
         ref={inputRef}
       />
+      <div className={`drop-area ${isDragging ? 'dragging' : ''}`}>
+        <div className="drop-area-text">
+          <h1>Drag and drop files here</h1>
+        </div>
+      </div>
     </div>
   );
 };

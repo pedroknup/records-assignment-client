@@ -16,7 +16,7 @@ function App() {
     const records = await processRecords(files);
     setRecords(records);
   };
-
+ 
   return (
     <div className="container">
       <div className="form">
@@ -27,6 +27,7 @@ function App() {
             onClick={handleFileUploadClick}
             type="button"
             disabled={files.length === 0}
+            className="process-files-button"
           >
             Process Files
           </Button>
