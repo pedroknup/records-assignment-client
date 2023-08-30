@@ -9,7 +9,7 @@ import {
   Paper,
 } from '@mui/material';
 import { RecordModel } from '../../data/models/record.model';
-import './RecordsTable.css';
+import './records-table.component.css';
 
 interface RecordsTableProps {
   records: RecordModel[];

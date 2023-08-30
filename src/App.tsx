@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import RecordsTable from './components/records-table/RecordsTable';
+import { Alert, Button, CircularProgress, Snackbar } from '@mui/material';
 import { processRecords } from './services/records.service';
 import { RecordModel } from './data/models/record.model';
-import { Alert, Button, CircularProgress, Snackbar } from '@mui/material';
-import FileSelect from './components/file-select/FileSelect';
-import './App.css';
+import FileSelect from './components/file-select';
+import RecordsTable from './components/records-table';
+import './app.css';
 
 function App() {
   const [records, setRecords] = useState<RecordModel[]>([]);

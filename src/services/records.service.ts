@@ -22,7 +22,11 @@ export const processRecords = async (
     body: formData,
   };
 
-  const response = await fetch(`${API_URL}/records/process-records`, options);
+  const endpoint = `records/process-records`;
+  const baseURL = API_URL;
+  const url = `${baseURL}/${endpoint}`;
+
+  const response = await fetch(url, options);
 
   const responseData: RecordsResponse = await response.json();
   return responseData.records;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Snackbar } from '@mui/material';
-import './FileSelect.css';
+import './file-select.component.css';
 import { getRelativePath } from '../../utils/get-relative-path.util';
 
 const UNSUPPORTED_FILE_FORMAT_MESSAGE: string =
