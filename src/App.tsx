@@ -33,6 +33,7 @@ function App() {
 
   return (
     <div className="container">
+      <h1>Transactions Validator</h1>
       <div className="form">
         <FileSelect onFilesChange={setFiles} files={files} />
         <div>
